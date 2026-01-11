@@ -21,27 +21,32 @@ namespace NLib::NThreadPool {
         ~TThreadPool();
         
         template <class TFunction, class... TArgs>
-        std::future<std::invoke_result_t<TFunction, TArgs...>>
+        std::pair<bool, std::future<std::invoke_result_t<TFunction, TArgs...>>> // -> [is task pushed, future]
         Submit(TFunction&& function, TArgs&&... args){ // If you need future
             using TResult = std::invoke_result_t<TFunction, TArgs...>;
 
-            auto taskPtr = std::make_shared<std::packaged_task<TResult()>>(
-                std::bind(std::forward<TFunction>(function), std::forward(args)...)
-            );
+            auto promise = std::make_shared<std::promise<TResult>>();
+            auto future = promise->get_future();
 
-            auto future = taskPtr->get_future();
-
-            if (!Tasks_.Push([&taskPtr] {
-                (*taskPtr)();
-            })) {
+            auto task = [promise, func = std::bind(std::forward<TFunction>(function), std::forward<TArgs>(args)...)] {
                 try {
-                    throw std::runtime_error("Thread pool is shut down");
+                    if constexpr (std::is_void_v<TResult>) {
+                        func();
+                        promise->set_value();
+                    } else {
+                        promise->set_value(func());
+                    }
                 } catch (...) {
-                    taskPtr->set_exception(std::current_exception());
+                    promise->set_exception(std::current_exception());
                 }
+            };
+
+            if (!Tasks_.Push(std::move(task))) {
+                promise->set_exception(std::make_exception_ptr(std::runtime_error("ThreadPool is shut down")));
+                return {false, std::move(future)};
             }
 
-            return future;
+            return {true, std::move(future)};
         }
 
         template <class TFunction>

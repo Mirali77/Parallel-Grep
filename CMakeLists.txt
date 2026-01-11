@@ -28,5 +28,6 @@ add_library(utils
 add_executable(
     thread_pool_lib_tests
     lib/thread_pool/blocking_queue_tests.cpp
+    lib/thread_pool/thread_pool_tests.cpp
 )
 target_link_libraries(thread_pool_lib_tests PRIVATE thread_pool_lib gtest gtest_main)
