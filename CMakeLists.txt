@@ -16,13 +16,21 @@ FetchContent_MakeAvailable(googletest)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
-add_library(thread_pool_lib
+add_library(
+    thread_pool_lib
     lib/thread_pool/blocking_queue.cpp
     lib/thread_pool/thread_pool.cpp
 )
 
-add_library(utils
+add_library(
+    utils
     utils/test_helpers.cpp
+)
+
+add_executable(
+    pgrep
+    src/main.cpp
+    src/cli_options.cpp
 )
 
 add_executable(
