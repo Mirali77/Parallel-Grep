@@ -22,7 +22,7 @@ namespace NLib::NThreadPool {
         
         template <class TFunction, class... TArgs>
         std::future<std::invoke_result_t<TFunction, TArgs...>>
-        Submit(TFunction&& function, TArgs&&... args){ // Use if you need the result of the task
+        Submit(TFunction&& function, TArgs&&... args){ // If you need future
             using TResult = std::invoke_result_t<TFunction, TArgs...>;
 
             auto taskPtr = std::make_shared<std::packaged_task<TResult()>>(
@@ -45,7 +45,7 @@ namespace NLib::NThreadPool {
         }
 
         template <class TFunction>
-        bool Post(TFunction&& function) { // Use if you don't need the result of the task
+        bool Post(TFunction&& function) { // If you want to post and forget
             return Tasks_.Push(std::function<void()>(std::forward<TFunction>(function)));
         }
 
