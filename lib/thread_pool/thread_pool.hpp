@@ -1,6 +1,6 @@
 #pragma once
 
-#include <lib/thread_pool/blocking_queue.hpp>
+#include "blocking_queue.hpp"
 #include <atomic>
 #include <functional>
 #include <future>

@@ -22,8 +22,8 @@ namespace NLib::NThreadPool {
 
         bool Pop(T& v) {
             std::unique_lock lock(Mutex_);
-            CondVar_.wait(lock, [&]{ return ClosedFlg_ || Queue_.empty(); });
-            if (Queue_.empty()) { // Means that queue is closed
+            CondVar_.wait(lock, [&]{ return ClosedFlg_ || !Queue_.empty(); });
+            if (Queue_.empty()) {
                 return false;
             }
             v = std::move(Queue_.front());
