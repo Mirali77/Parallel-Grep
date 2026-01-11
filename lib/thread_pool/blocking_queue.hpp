@@ -3,7 +3,6 @@
 #include <condition_variable>
 #include <queue>
 #include <mutex>
-#include <optional>
 
 namespace NLib::NThreadPool {
     template <class T>
@@ -22,16 +21,14 @@ namespace NLib::NThreadPool {
         }
 
         bool Pop(T& v) {
-            {
-                std::lock_guard lock(Mutex_);
-                CondVar_.wait(lock, [&] { return ClosedFlg_ || Queue_.empty(); });
-                if (Queue_.empty()) { // Means that queue is closed
-                    return false;
-                }
-                v = std::move(Queue_.front());
-                Queue_.pop();
-                return true;
+            std::lock_guard lock(Mutex_);
+            CondVar_.wait(lock, [&] { return ClosedFlg_ || Queue_.empty(); });
+            if (Queue_.empty()) { // Means that queue is closed
+                return false;
             }
+            v = std::move(Queue_.front());
+            Queue_.pop();
+            return true;
         }
 
         void Close() {
