@@ -25,11 +25,11 @@ namespace NLib::NThreadPool {
         Submit(TFunction&& function, TArgs&&... args){ // Use if you need the result of the task
             using TResult = std::invoke_result_t<TFunction, TArgs...>;
 
-            std::shared_ptr<std::packaged_task<TResult()>> taskPtr = std::make_shared<std::packaged_task<TResult()>>(
+            auto taskPtr = std::make_shared<std::packaged_task<TResult()>>(
                 std::bind(std::forward<TFunction>(function), std::forward(args)...)
             );
 
-            std::future<TResult> fut = taskPtr->get_future();
+            auto future = taskPtr->get_future();
 
             if (!Tasks_.Push([&taskPtr] {
                 (*taskPtr)();
@@ -41,7 +41,7 @@ namespace NLib::NThreadPool {
                 }
             }
 
-            return fut;
+            return future;
         }
 
         template <class TFunction>
