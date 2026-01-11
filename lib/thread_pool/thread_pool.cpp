@@ -14,7 +14,9 @@ namespace NLib::NThreadPool {
     }
 
     TThreadPool::~TThreadPool() {
-        Shutdown();
+        if (!StopFlg_.load()) {
+            Shutdown();
+        }
     }
 
     void TThreadPool::Shutdown() {
