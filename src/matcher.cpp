@@ -1,6 +1,6 @@
 #include "matcher.hpp"
 
-namespace NMatcher {
+namespace NParallelGrep::NMatcher {
     TLiteralMatcher::TLiteralMatcher(const std::string& pattern)
         : Pattern(pattern)
     {

@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace NResult {
+namespace NParallelGrep::NResult {
     struct TResult {
         std::string RelativePath;
         uint64_t LineNumber;

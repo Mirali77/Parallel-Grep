@@ -4,7 +4,7 @@
 #include <string_view>
 #include <regex>
 
-namespace NMatcher {
+namespace NParallelGrep::NMatcher {
     class IMatcher {
     public:
         virtual ~IMatcher() = default;

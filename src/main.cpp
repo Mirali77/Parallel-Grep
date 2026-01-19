@@ -1,6 +1,7 @@
 #include "cli_options.hpp"
-#include "result.hpp"
 #include "matcher.hpp"
+#include "result.hpp"
+#include "printer.hpp"
 
 #include <lib/thread_pool/blocking_queue.hpp>
 #include <lib/thread_pool/thread_pool.hpp>
@@ -15,6 +16,8 @@ static void OnSigint(int) {
 }
 
 int main(int argc, char* argv[]) {
+    using namespace NParallelGrep;
+
     try {
         auto opts = NParallelGrep::NCli::ParseCli(argc, argv);
 
@@ -33,7 +36,7 @@ int main(int argc, char* argv[]) {
             matcher = std::make_unique<NMatcher::TLiteralMatcher>(opts.Pattern);
         }
 
-        
+        NPrinter::TPrinter printer(out, opts);
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
         return 2;
