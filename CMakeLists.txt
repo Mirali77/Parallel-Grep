@@ -23,6 +23,12 @@ add_library(
 )
 
 add_library(
+    task_tracker_lib
+    lib/task_tracker/task_tracker.cpp
+)
+target_link_libraries(task_tracker_lib PUBLIC thread_pool_lib)
+
+add_library(
     utils
     utils/test_helpers.cpp
 )
@@ -38,4 +44,10 @@ add_executable(
     lib/thread_pool/blocking_queue_tests.cpp
     lib/thread_pool/thread_pool_tests.cpp
 )
-target_link_libraries(thread_pool_lib_tests PRIVATE thread_pool_lib gtest gtest_main)
+target_link_libraries(thread_pool_lib_tests PRIVATE thread_pool_lib gtest_main)
+
+add_executable(
+    task_tracker_lib_tests
+    lib/task_tracker/task_tracker_tests.cpp
+)
+target_link_libraries(task_tracker_lib_tests PRIVATE task_tracker_lib gtest_main)
