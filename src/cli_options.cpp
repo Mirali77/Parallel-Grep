@@ -1,4 +1,4 @@
-#include "cli_options.h"
+#include "cli_options.hpp"
 
 #include <getopt.h>
 #include <iostream>

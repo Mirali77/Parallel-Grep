@@ -37,7 +37,10 @@ add_executable(
     pgrep
     src/main.cpp
     src/cli_options.cpp
+    src/result.cpp
+    src/matcher.cpp
 )
+target_link_libraries(pgrep PUBLIC thread_pool_lib task_tracker_lib)
 
 add_executable(
     thread_pool_lib_tests

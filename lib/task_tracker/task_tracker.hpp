@@ -23,11 +23,13 @@ namespace NLib::NTaskTracker {
             if (!ThreadPool_.Post([this, func = std::forward<TFunction>(function)]() mutable {
                 func();
                 FinishOne();
+
             })) { // thread pool is closed
                 FinishOne();
+                return false;
             }
 
-            return ok;
+            return true;
         }
 
         void Wait();
