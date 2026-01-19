@@ -20,12 +20,10 @@ namespace NLib::NTaskTracker {
                 PendingCount_++;
             }
 
-            bool ok = ThreadPool_.Post([this, func = std::forward<TFunction>(function)]() mutable {
+            if (!ThreadPool_.Post([this, func = std::forward<TFunction>(function)]() mutable {
                 func();
                 FinishOne();
-            });
-
-            if (!ok) { // thread pool is closed
+            })) { // thread pool is closed
                 FinishOne();
             }
 
