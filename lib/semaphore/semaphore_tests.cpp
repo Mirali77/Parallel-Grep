@@ -6,7 +6,7 @@
 using namespace std::chrono_literals;
 
 TEST(Semaphore, AcquireBlocksUntilRelease) {
-    NSemaphore::TSemaphore semaphore(0);
+    NLib::NSemaphore::TSemaphore semaphore(0);
 
     auto future = NUtils::NTestHelpers::RunAsync([&]{
         semaphore.Acquire();
@@ -22,7 +22,7 @@ TEST(Semaphore, AcquireBlocksUntilRelease) {
 }
 
 TEST(Semaphore, TryAcquire) {
-    NSemaphore::TSemaphore semaphore(0);
+    NLib::NSemaphore::TSemaphore semaphore(0);
 
     EXPECT_FALSE(semaphore.TryAcquire());
 
@@ -33,7 +33,7 @@ TEST(Semaphore, TryAcquire) {
 }
 
 TEST(Semaphore, ReleaseNAllowsNAcquires) {
-    NSemaphore::TSemaphore semaphore(0);
+    NLib::NSemaphore::TSemaphore semaphore(0);
 
     semaphore.Release(3);
 
@@ -45,7 +45,7 @@ TEST(Semaphore, ReleaseNAllowsNAcquires) {
 }
 
 TEST(Semaphore, MultipleWaitersAreWokenByReleaseN) {
-    NSemaphore::TSemaphore semaphore(0);
+    NLib::NSemaphore::TSemaphore semaphore(0);
 
     constexpr int N = 8;
     std::latch ready(N);
@@ -80,7 +80,7 @@ TEST(Semaphore, StressTokenPassingNoDeadlock) {
     constexpr int THREADS = 8;
     constexpr int ITERS = 50'000;
 
-    NSemaphore::TSemaphore semaphore(1);
+    NLib::NSemaphore::TSemaphore semaphore(1);
     std::atomic<long long> sum{0};
 
     std::vector<std::thread> threads;
@@ -104,7 +104,7 @@ TEST(Semaphore, StressTokenPassingNoDeadlock) {
 }
 
 TEST(Semaphore, ReleaseWakesOneWaiter) {
-    NSemaphore::TSemaphore semaphore(0);
+    NLib::NSemaphore::TSemaphore semaphore(0);
 
     std::latch ready(2);
     std::atomic<int> passed{0};

@@ -1,6 +1,6 @@
 #include "semaphore.hpp"
 
-namespace NSemaphore {
+namespace NLib::NSemaphore {
     TSemaphore::TSemaphore(std::ptrdiff_t initial)
         : Count_(initial)
     {

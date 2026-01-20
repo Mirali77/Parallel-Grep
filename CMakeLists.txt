@@ -34,6 +34,11 @@ add_library(
 )
 
 add_library(
+    pending_manager_lib
+    lib/pending_manager/pending_manager.cpp
+)
+
+add_library(
     utils
     utils/test_helpers.cpp
 )
@@ -47,7 +52,7 @@ add_executable(
     src/result.cpp
     src/search.cpp
 )
-target_link_libraries(pgrep PUBLIC thread_pool_lib task_tracker_lib semaphore_lib)
+target_link_libraries(pgrep PUBLIC thread_pool_lib task_tracker_lib semaphore_lib pending_manager_lib)
 
 add_executable(
     thread_pool_lib_tests
@@ -67,3 +72,9 @@ add_executable(
     lib/semaphore/semaphore_tests.cpp
 )
 target_link_libraries(semaphore_lib_tests PRIVATE semaphore_lib gtest_main)
+
+add_executable(
+    pending_manager_lib_tests
+    lib/pending_manager/pending_manager_tests.cpp
+)
+target_link_libraries(pending_manager_lib_tests PRIVATE pending_manager_lib thread_pool_lib gtest_main)

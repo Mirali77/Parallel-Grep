@@ -17,6 +17,6 @@ namespace NParallelGrep::NSearch {
         const uint32_t jobs = opts.JobsCount > 0 ? opts.JobsCount :  std::thread::hardware_concurrency();
         const uint32_t tasksLimit = std::max(2000u, jobs * 256);
 
-        NSemaphore::TSemaphore semaphore(tasksLimit);
+        NLib::NSemaphore::TSemaphore semaphore(tasksLimit);
     }
 }

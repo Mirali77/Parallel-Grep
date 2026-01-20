@@ -4,7 +4,7 @@
 #include <mutex>
 #include <condition_variable>
 
-namespace NSemaphore {
+namespace NLib::NSemaphore {
     class TSemaphore {
     public:
         explicit TSemaphore(std::ptrdiff_t initial = 0);
