@@ -29,19 +29,25 @@ add_library(
 target_link_libraries(task_tracker_lib PUBLIC thread_pool_lib)
 
 add_library(
+    semaphore_lib
+    lib/semaphore/semaphore.cpp
+)
+
+add_library(
     utils
     utils/test_helpers.cpp
 )
 
 add_executable(
     pgrep
-    src/main.cpp
     src/cli_options.cpp
-    src/result.cpp
+    src/main.cpp
     src/matcher.cpp
     src/printer.cpp
+    src/result.cpp
+    src/search.cpp
 )
-target_link_libraries(pgrep PUBLIC thread_pool_lib task_tracker_lib)
+target_link_libraries(pgrep PUBLIC thread_pool_lib task_tracker_lib semaphore_lib)
 
 add_executable(
     thread_pool_lib_tests
@@ -55,3 +61,9 @@ add_executable(
     lib/task_tracker/task_tracker_tests.cpp
 )
 target_link_libraries(task_tracker_lib_tests PRIVATE task_tracker_lib gtest_main)
+
+add_executable(
+    semaphore_lib_tests
+    lib/semaphore/semaphore_tests.cpp
+)
+target_link_libraries(semaphore_lib_tests PRIVATE semaphore_lib gtest_main)

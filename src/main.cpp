@@ -9,10 +9,10 @@
 #include <iostream>
 #include <csignal>
 
-static std::atomic<bool>* cancelPtr = nullptr;
+static std::atomic<bool>* cancelFlgPtr = nullptr;
 
 static void OnSigint(int) {
-  if (cancelPtr) cancelPtr->store(true, std::memory_order_relaxed);
+  if (cancelFlgPtr) cancelFlgPtr->store(true, std::memory_order_relaxed);
 }
 
 int main(int argc, char* argv[]) {
@@ -37,6 +37,8 @@ int main(int argc, char* argv[]) {
         }
 
         NPrinter::TPrinter printer(out, opts);
+
+        
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
         return 2;
