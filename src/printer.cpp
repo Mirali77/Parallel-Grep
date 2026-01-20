@@ -10,7 +10,7 @@ namespace NParallelGrep::NPrinter {
         : Worker([&]{
             NParallelGrep::NResult::TResult result;
             while (out.Pop(result)) {
-                std::cout << result.RelativePath << ":" << result.LineNumber << ":" << result.Line << '\n';
+                std::cout << result.FileName << ":" << result.LineNumber << ":" << result.Line << '\n';
             }
         })
     {

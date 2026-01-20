@@ -51,6 +51,7 @@ add_executable(
     src/printer.cpp
     src/result.cpp
     src/search.cpp
+    src/scanner.cpp
 )
 target_link_libraries(pgrep PUBLIC thread_pool_lib task_tracker_lib semaphore_lib pending_manager_lib)
 

@@ -4,7 +4,7 @@
 
 namespace NParallelGrep::NResult {
     struct TResult {
-        std::string RelativePath;
+        std::string FileName;
         uint64_t LineNumber;
         std::string Line;
     };
