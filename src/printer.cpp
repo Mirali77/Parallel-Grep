@@ -7,16 +7,24 @@ namespace NParallelGrep::NPrinter {
         NLib::NThreadPool::TBlockingQueue<NParallelGrep::NResult::TResult>& out,
         NParallelGrep::NCli::TCliOptions& opts
     )
-        : Worker_([&]{
+        : CountOnlyFlg_(opts.CountOnly)
+        , Worker_([&]{
             NResult::TResult result;
             while (out.Pop(result)) {
-                std::cout << result.FileName << ":" << result.LineNumber << ":" << result.Line << '\n';
+                if (CountOnlyFlg_) {
+                    Counter_++;
+                } else {
+                    std::cout << result.FileName << ":" << result.LineNumber << ":" << result.Line << '\n';
+                }
             }
         })
     {
     }
 
     void TPrinter::Close() {
+        if (CountOnlyFlg_) {
+            std::cout << "Count: " << Counter_ << '\n';
+        }
         Worker_.join();
     }
 }

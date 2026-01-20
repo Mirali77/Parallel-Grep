@@ -17,6 +17,8 @@ namespace NParallelGrep::NPrinter {
         void Close();
 
     private:
+        bool CountOnlyFlg_;
         std::thread Worker_;
+        size_t Counter_ = 0;
     };
 }

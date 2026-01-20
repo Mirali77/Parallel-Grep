@@ -11,6 +11,8 @@ namespace NParallelGrep::NCli {
         bool UseRegex = false;
         bool ProcessHiddenFiles = false;
         bool FollowSymlinks = false;
+        bool CountOnly = false;
+
         EBinaryPolicy BinaryFilesPolicy = EBinaryPolicy::Skip;
 
         std::uint64_t MaxFileSize = 64ull * 1024 * 1024; // 64MiB

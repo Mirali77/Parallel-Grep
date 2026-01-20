@@ -16,6 +16,7 @@ namespace {
             "      --exclude GLOB     exclude paths matching glob (repeatable)\n"
             "      --hidden           include hidden files/directories\n"
             "      --follow-symlinks  follow symlinks\n"
+            "      --count            count only, no output of matched strings"
             "      --binary MODE      skip|text (default: skip)\n"
             "  -h, --help             show this help\n";
     }
@@ -56,6 +57,7 @@ namespace NParallelGrep::NCli {
             OPT_EXCLUDE,
             OPT_HIDDEN,
             OPT_FOLLOW_SYMLINKS,
+            OPT_COUNT_ONLY,
             OPT_BINARY
         };
 
@@ -68,6 +70,7 @@ namespace NParallelGrep::NCli {
             {"exclude", required_argument, nullptr, OPT_EXCLUDE},
             {"hidden", no_argument, nullptr, OPT_HIDDEN},
             {"follow-symlinks", no_argument, nullptr, OPT_FOLLOW_SYMLINKS},
+            {"count", no_argument, nullptr, OPT_COUNT_ONLY},
             {"binary", required_argument, nullptr, OPT_BINARY},
             {nullptr, 0, nullptr, 0}
         };
@@ -103,6 +106,9 @@ namespace NParallelGrep::NCli {
                     break;
                 case OPT_FOLLOW_SYMLINKS:
                     opts.FollowSymlinks = true;
+                    break;
+                case OPT_COUNT_ONLY:
+                    opts.CountOnly = true;
                     break;
                 case OPT_BINARY:
                     opts.BinaryFilesPolicy = ParseBinaryPolicy(optarg);
