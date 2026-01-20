@@ -13,6 +13,8 @@
 
 .vscode/
 *.code-workspace
+/benchmark/build-release/*
+/benchmark/data/*
 
 /build/
 

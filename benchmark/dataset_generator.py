@@ -172,7 +172,7 @@ def generate_dataset_big(root: Path, rng: random.Random) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default="benchmark/data", help="output directory (default: benchmark/data)")
+    ap.add_argument("--out", default="data", help="output directory (default: data)")
     ap.add_argument("--seed", type=int, default=123, help="random seed (default: 123)")
     ap.add_argument("--only", choices=["all", "small", "mix", "big"], default="all")
     args = ap.parse_args()
