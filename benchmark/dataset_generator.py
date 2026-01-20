@@ -133,7 +133,7 @@ def generate_dataset_mix(root: Path, rng: random.Random) -> None:
                 sz = rng.choice([8_192, 16_384, 32_768, 65_536, 131_072])
                 # больше матчей
                 match_prob = 0.08 if sz >= 32_768 else 0.05
-                ext = rng.choice([".log", ".txt", ".trace"])
+                ext = rng.choice([".log", ".txt", ".trace"]) # разные расширения
                 fpath = dpath / f"part_{i:02d}{ext}"
                 generate_text_file(rng, fpath, sz, match_prob, patterns)
 
