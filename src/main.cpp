@@ -2,6 +2,7 @@
 #include "matcher.hpp"
 #include "result.hpp"
 #include "printer.hpp"
+#include "search.hpp"
 
 #include <lib/thread_pool/blocking_queue.hpp>
 #include <lib/thread_pool/thread_pool.hpp>
@@ -27,6 +28,9 @@ int main(int argc, char* argv[]) {
                 : std::thread::hardware_concurrency()
         );
         NLib::NThreadPool::TBlockingQueue<NResult::TResult> out;
+
+        std::atomic<bool> cancelFlg{false};
+        cancelFlgPtr = &cancelFlg;
         std::signal(SIGINT, OnSigint);
 
         std::unique_ptr<NMatcher::IMatcher> matcher;
@@ -38,7 +42,12 @@ int main(int argc, char* argv[]) {
 
         NPrinter::TPrinter printer(out, opts);
 
-        
+        NSearch::RunSearchSequentialWalk(opts, threadPool, *matcher, out, *cancelFlgPtr);
+
+        printer.Close();
+        threadPool.Shutdown();
+
+        return cancelFlg.load(std::memory_order_relaxed) ? 130 : 0;
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
         return 2;

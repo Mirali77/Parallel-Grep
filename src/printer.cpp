@@ -7,12 +7,16 @@ namespace NParallelGrep::NPrinter {
         NLib::NThreadPool::TBlockingQueue<NParallelGrep::NResult::TResult>& out,
         NParallelGrep::NCli::TCliOptions& opts
     )
-        : Worker([&]{
-            NParallelGrep::NResult::TResult result;
+        : Worker_([&]{
+            NResult::TResult result;
             while (out.Pop(result)) {
                 std::cout << result.FileName << ":" << result.LineNumber << ":" << result.Line << '\n';
             }
         })
     {
+    }
+
+    void TPrinter::Close() {
+        Worker_.join();
     }
 }

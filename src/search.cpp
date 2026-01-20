@@ -126,7 +126,7 @@ namespace NParallelGrep::NSearch {
                 semaphore.Acquire();
                 
                 if (
-                    !threadPool.Post([&]{
+                    !threadPool.Post([&, path, fileName]{
                         NScanner::ScanFile(opts, path, fileName, matcher, out, cancelFlg);
                         semaphore.Release();
                         pendingManager.Decrement();

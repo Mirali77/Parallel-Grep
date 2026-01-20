@@ -14,7 +14,9 @@ namespace NParallelGrep::NPrinter {
             NParallelGrep::NCli::TCliOptions& opts
         );
 
+        void Close();
+
     private:
-        std::thread Worker;
+        std::thread Worker_;
     };
 }
