@@ -75,11 +75,9 @@ namespace NParallelGrep::NCli {
             {nullptr, 0, nullptr, 0}
         };
 
-        optind = 1;
-
         while (true) {
             int idx = 0;
-            int c = getopt_long(argc, argv, "j:rnh", optsToParse, &idx);
+            int c = getopt_long(argc, argv, "j:rh", optsToParse, &idx);
             if (c == -1) break;
 
             switch (c) {
